@@ -17,15 +17,19 @@ def import_csv():
         placeholders = ", ".join("?" * len(columns))
         col_names = ", ".join(columns)
 
+        count = 0
         for row in reader:
             values = [row[c] for c in columns]
             cur.execute(
                 f"INSERT INTO users ({col_names}) VALUES ({placeholders})",
                 values
             )
+            count += 1
 
     conn.commit()
     conn.close()
+
+    print(f"✅ Inserted {count} records into users.db")
 
 if __name__ == "__main__":
     import_csv()
